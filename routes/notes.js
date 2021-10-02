@@ -4,6 +4,13 @@ const router = Router()
 const db = require('../db/connection')
 const { ObjectId } = require('mongodb')
 
+router.get('/:id', async function(req, res){
+	const id = new ObjectId(req.params.id)
+	const note = await db.getDb().db().collection('notes').findOne({_id: id })
+
+	res.render('notes/detail', {note})
+})
+
 router.get('/', function(req, res){
 	res.render('notes/create')
 })
